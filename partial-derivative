@@ -1,0 +1,41 @@
+// Partial derivative visualisation of f wrt x:
+clc
+clear all 
+syms x y 
+z=input('enter the two dimensional function f(x,y): ');
+x1=input('enter the x value at which the derivative has to be evaluated: ');
+y1=input('enter the y value at which the derivative has to be evaluated: ');
+z1=subs(z,[x,y],[x1,y1])
+ezsurf(z,[x1-2,x1+2])
+f1=diff(z,x)
+slopex=subs(f1,[x,y],[x1,y1]);
+[x2,z2]=meshgrid(x1-2:.25:x1+2,0:0.5:10);
+y2=y1*ones(size(x2));
+hold on 
+surf(x2,y2,z2);
+t=linspace(-1,1);
+x3=x1+t;
+y3=y1*ones(size(t));
+z3=z1+slopex*t;
+line(x3,y3,z3,'color','red','linewidth',2)
+
+//Partial derivative visualisation of f wrt y:
+clc
+clear all 
+syms x y 
+z=input('enter the two dimensional function f(x,y): ');
+x1=input('enter the x value at which the derivative has to be evaluated: ');
+y1=input('enter the y value at which the derivative has to be evaluated: ');
+z1=subs(z,[x,y],[x1,y1])
+ezsurf(z,[y1-2,y1+2])
+f1=diff(z,y)
+slopey=subs(f1,[x,y],[x1,y1]);
+[y2,z2]=meshgrid(y1-2:.25:y1+2,0:0.5:10);
+x2=x1*ones(size(y2));
+hold on 
+surf(x2,y2,z2);
+t=linspace(-1,1);
+y3=y1+t;
+x3=x1*ones(size(t));
+z3=z1+slopey*t;
+line(x3,y3,z3,'color','red','linewidth',2)
