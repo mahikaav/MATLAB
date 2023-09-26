@@ -1,0 +1,33 @@
+clear all
+clc
+syms x y
+f=input('enter the function f(x,y): ');
+fx=diff(f,x);
+fy=diff(f,y);
+[cx,cy]=solve(fx,fy)
+fxx=diff(fx,x);
+fyy=diff(fy,y);
+fxy=diff(fy,x);
+D=fxx*fyy-fxy^2
+for i=1:1:size(cx)
+    figure
+    T1=subs(D,[x,y],[cx(i),cy(i)]);
+    T2=subs(fxx,[x,y],[cx(i),cy(i)]);
+    T3=subs(f,[x,y],[cx(i),cy(i)]);
+    if (double(T1))<0
+        sprintf('The point (x,y) is (%d, %d) is saddle point',double(cx(i)),double(cy(i)))
+    elseif (double(T1)==0)
+        sprintf('The test is inconclusive')
+    else
+        if double(T2)<0
+            sprintf('The point (x,y) is (%d,%d) and is point of maxima',double(cx(i)),double(cy(i)))
+            sprintf('and maximum value of function is %d',double(T3))
+        else
+            sprintf('The point (x,y) is (%d,%d) and is point of minima',double(cx(i)),double(cy(i)))
+            sprintf('and minimum value of function is %d',double(T3))
+        end
+    end
+ezsurf(f,[double(cx(i))-2,double(cx(i))+2,double(cy(i))-2,double(cy(i))+2]);
+hold on
+plot3(double(cx(i)),double(cy(i)),double(T3),'r*','markersize',15);
+end
