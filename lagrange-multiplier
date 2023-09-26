@@ -1,0 +1,81 @@
+// 1) Find the minimum value of f (x,y)= x^2 + 4*y^2 - 2*x + 8*y subject to the constraint x + 2y = 7
+
+clc
+clear all
+syms x y l 
+f = input("Enter the function f: ");
+g = input("Enter the constraint function: ");
+[vl, vx, vy] = solve(jacobian(f-l*g, [l x y]))
+T = subs(f, {x, y}, {vx, vy});
+TT = sort(T);
+fmin = TT(1)
+fmax = TT(length(T))
+if length(TT)==1
+    sprintf('extreme value of function f is %d',T)
+else
+    sprintf('the maximum value of function is %d',fmax)
+    sprintf('the minimum value of function is %d',fmin)
+end 
+
+// 2) Find the points on the surface z^2 = x*y + 4 closest to the origin
+
+clc
+clear all
+syms x y z l real
+f = input("Enter the function f: ");
+g = input("Enter the constraint function: ");
+[vl, vx, vy, vz] = solve(jacobian(f-l*g, [l x y z]));
+T = subs(f, {x, y, z}, {vx, vy, vz})
+tt=sort(T);
+fmin=tt(1)
+for i=1:fmin
+    sprintf('The point (x, y, z) is (%d, %d, %d)', double(vx(i)), double(vy(i)), double(vz(i)))
+    sprintf('The value of the function is %d', double(T(i)))
+end
+
+// Q3) Find the shortest and the longest distances from the point (1, 2, -1) to the sphere x^2 + y^2 + z^2 = 24
+
+clc
+clear all
+syms x y z l real
+f = input("Enter the function f: ");
+g = input("Enter the constraint function: ");
+[vl, vx, vy, vz] = solve(jacobian(f-l*g, [l x y z]));
+T = subs(f, {x, y, z}, {vx, vy, vz})
+tt=sort(T);
+fmin=tt(1);
+fmax=tt(length(T));
+sprintf('the shortest distance from the point is %f',fmin)
+sprintf('the longest distance from the point is %f',fmax)
+
+//4) Find the maximum and minimum values of f(x,y) = x - 2*y + 5*z on the sphere x^2 + y^2 + z^2 = 30
+
+clc
+clear all
+syms x y z l 
+f = input("Enter the function f: ");
+g = input("Enter the constraint function: ");
+[vl, vx, vy, vz] = solve(jacobian(f-l*g, [l x y z]))
+T = subs(f, {x, y, z}, {vx, vy, vz});
+TT = sort(T);
+fmin = TT(1)
+fmax = TT(length(T))
+if length(TT)==1
+    sprintf('extreme value of function f is %d',T)
+else
+    sprintf('the maximum value of function is %d',fmax)
+    sprintf('the min
+end
+
+// 5) Find the minimum distance from the point (2,-1,1) to the plane x + y – z = 2
+Input:
+clc
+clear all
+syms x y z l real
+f = input("Enter the function f: ");
+g = input("Enter the constraint function: ");
+[vl, vx, vy, vz] = solve(jacobian(f-l*g, [l x y z]));
+T = subs(f, {x, y, z}, {vx, vy, vz})
+tt=sort(T);
+fmin=tt(1);
+sprintf('the minimum distance from the point to the plane is %f',fmin)
