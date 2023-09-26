@@ -1,0 +1,69 @@
+clear all
+clc
+syms x 
+f=input('Enter the function f(x)');
+fx=diff(f,x)
+fxx=diff(fx,x)
+c=solve(fx)
+c=double(c)
+cmin=min(c);
+cmax=max(c);
+figure(1)
+ezplot(f,[cmin-2,cmax+2])
+hold on
+for i=1:length(c)       —---> from 1st value of c until the last value, ie length of c 
+    T1=subs(fxx,x,c(i));
+    T1=double(T1);
+    T3=subs(f,x,c(i));
+    T3=double(T3);
+    if (T1==0)
+        sprintf('The inflection point is at %d',c(i))
+    else 
+        if (T1<0)
+            sprintf('The function has a local maximum at %d',c(i))
+            sprintf('and the local maximum value of the function is given by %d',T3)
+        else
+            sprintf('The function has a local minimum at %d',c(i))
+            sprintf('and the local minimum value of the function is given by %d',T3)
+        end
+    end
+    plot(double(c(i)),T3,'r*','markersize',15)
+end
+de=polynomialDegree(fxx); 
+if(de==0)
+    sprintf('the given polynomial is second degree or less')
+else
+    d = solve(fxx)
+for i = 1:1:size(d)
+    T2 = subs(f, x ,d(i) );
+    R1=sign(subs(fxx,x,d(i)+0.0001));
+    L1=sign(subs(fxx,x,d(i)-0.0001));
+    check=abs(L1-R1)
+    if (check==2)
+        sprintf('The point x=%d is a point of inflection',double (d(i)))
+    else
+        sprintf('The point x=%d is not a point of inflection',double (d(i)))
+    end
+    plot(double(d(i)), double(T2), 'g*', 'markersize', 15);
+end
+end
+figure(2)
+ezplot(fx,[cmin-2,cmax+2])
+title('Plotting first derivative of f and critical points')
+hold on
+for i= 1:1:size(c)
+    T4 = subs(fx, x ,c(i) );
+    plot(double(c(i)), double(T4), 'r*', 'markersize', 15);
+end
+figure(3)
+ezplot(fxx,[cmin-2,cmax+2])
+hold on
+if(de==0)
+    sprintf('the given polynomial is second degree or less, second derivative plot is not possible')
+else
+    for i = 1:1:size(d)
+        T4 = subs(fxx, x ,d(i) );
+        plot(double(d(i)), double(T4), 'r*', 'markersize', 15);
+    end
+    title('Plotting second derivative of f and inflection points ')
+end
