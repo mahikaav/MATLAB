@@ -1,0 +1,27 @@
+clear all
+clc
+syms x y
+f=input('enter the function f(x,y): ');
+x0=input('enter the value of x0: ');
+y0=input('enter the value of y0: ');
+v=input('enter value of function at (x0,y0): ');
+Lim1=limit(subs(f,y,y0),x,x0);
+Lim2=limit(subs(f,x,x0),y,y0);
+m=input('enter value of m (slope): ');
+y1=y0+(x-x0)*m;
+Lim3=limit(subs(f,y,y1),x,x0);
+n=input('enter value of n (slope): ');
+x1=x0+(y-y0)*n;
+Lim4=limit(subs(f,x,x1),y,y0);
+if ((Lim1==Lim2) && (Lim2==Lim3) && (Lim3==Lim4))
+    disp('Limit of function may exist at (x0,y0)')
+    sprintf('The limit is %f',Lim1)
+    if (Lim1==v)
+        disp('Function is continuous at (x0,y0)')
+    else
+        disp('Function is not continuous at (x0,y0)')
+    end
+else
+    disp('Limit does not exist')
+    disp('Function is not continuous at (x0,y0)')
+end
